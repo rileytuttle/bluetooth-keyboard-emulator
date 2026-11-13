@@ -129,6 +129,9 @@ DEVICE_NAME = os.environ.get("BTKB_NAME") or f"{socket.gethostname()} keyboard"
 # for devices recorded here, so it can never drop the pairing for headphones,
 # a mouse, or anything else that merely happens to be bonded to this adapter.
 # Nothing but a phone acting as an HID host ever connects to PSM 0x11/0x13.
+# The directory name stays bt-kb-* now that the project is called
+# bluetooth-keyboard-emulator: it is live state on machines that already have
+# peers recorded, and btkb_forget.py reads the same path.
 STATE_DIR = os.environ.get("BTKB_STATE_DIR", "/var/lib/bt-kb-emulator")
 PEERS_PATH = os.path.join(STATE_DIR, "peers")
 

@@ -74,11 +74,11 @@
   </attribute>
 
   <attribute id="0x0101">
-    <text value="Emulated Bluetooth keyboard (bt-kb-emulator)" />
+    <text value="Emulated Bluetooth keyboard (bluetooth-keyboard-emulator)" />
   </attribute>
 
   <attribute id="0x0102">
-    <text value="bt-kb-emulator" />
+    <text value="bluetooth-keyboard-emulator" />
   </attribute>
 
   <attribute id="0x0200"> <!-- HIDDeviceReleaseNumber (legacy, deprecated) -->

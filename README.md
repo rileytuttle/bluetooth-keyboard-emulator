@@ -1,4 +1,4 @@
-# bt-kb-emulator
+# bluetooth-keyboard-emulator
 
 Turns your Linux PC into a Bluetooth keyboard *peripheral* (the "HID Device"
 role) — the HID analogue of how BlueZ lets a PC act as an A2DP *sink*
@@ -48,14 +48,30 @@ running as root on your desktop.
 
 ## Installing
 
-Two nix routes, depending on the host:
+This is a flake. Add it as an input:
 
-- **NixOS**: `imports = [ .../bt-kb-emulator/module.nix ];`. Declares the
-  system service, `--noplugin=input` and the Class of Device. Nothing
-  imperative to run; see the prerequisite note below about restarting
+```nix
+inputs.bluetooth-keyboard-emulator = {
+  url = "github:rileytuttle/bluetooth-keyboard-emulator";
+  inputs.nixpkgs.follows = "nixpkgs";
+};
+```
+
+Then take one of two routes, depending on the host:
+
+- **NixOS**:
+  `imports = [ inputs.bluetooth-keyboard-emulator.nixosModules.default ];`.
+  Declares the system service, `--noplugin=input` and the Class of Device.
+  Nothing imperative to run; see the prerequisite note below about restarting
   `bluetooth.service` the first time.
 - **nix + home-manager on another distro** (Ubuntu, Fedora, Arch):
-  `imports = [ .../bt-kb-emulator/home.nix ];`, then run `bt-kb-setup` once.
+  `imports = [ inputs.bluetooth-keyboard-emulator.homeManagerModules.default ];`,
+  then run `bt-kb-setup` once.
+
+To try it without importing anything,
+`nix run github:rileytuttle/bluetooth-keyboard-emulator` builds the package
+and starts the capture window — but the server half still needs the system
+state one of the two modules above declares.
 
 `home.nix` can only install the user-facing half. The server needs raw
 `AF_BLUETOOTH` L2CAP sockets, so it needs real root and cannot live in

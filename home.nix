@@ -13,7 +13,7 @@
 #                                system units (see setup_system.py)
 #
 # Usage, on a non-NixOS host:
-#   imports = [ .../bt-kb-emulator/home.nix ];
+#   imports = [ inputs.bluetooth-keyboard-emulator.homeManagerModules.default ];
 # then, once, in a shell:
 #   bt-kb-setup
 #
@@ -26,11 +26,11 @@
 { pkgs, ... }:
 
 let
-  bt-kb-emulator = pkgs.callPackage ./package.nix { };
+  bluetooth-keyboard-emulator = pkgs.callPackage ./package.nix { };
 in
 {
   home.packages = [
-    bt-kb-emulator
+    bluetooth-keyboard-emulator
     # bluetoothctl, for pairing and for clearing a half-gone bond
     # ("you need to forget this device first" on the phone means the PC
     # still holds the link key: bluetoothctl remove <addr>).

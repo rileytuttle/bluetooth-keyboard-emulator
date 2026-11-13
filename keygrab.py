@@ -47,7 +47,7 @@ class KeyGrabApp:
         self.sock = None
         self._rxbuf = b""
 
-        root.title("bt-kb-emulator")
+        root.title("bt-kb-keygrab")
         root.geometry("480x320")
 
         self.status = tk.Label(root, font=("sans-serif", 16, "bold"), pady=20)

@@ -1,14 +1,13 @@
 # Bluetooth HID-device keyboard emulator: pairs this PC to a phone as a
-# Bluetooth keyboard peripheral. See README.md in this directory for the
-# protocol writeup (BlueZ only handles pairing/SDP here; the two raw L2CAP
-# sockets for the actual keystroke traffic are owned directly by
-# hid_server.py).
+# Bluetooth keyboard peripheral. See README.md for the protocol writeup
+# (BlueZ only handles pairing/SDP here; the two raw L2CAP sockets for the
+# actual keystroke traffic are owned directly by hid_server.py).
 { lib, pkgs, ... }:
 
 let
   # Shared with home.nix (home-manager on a foreign distro), which installs
   # the same programs but has bt-kb-setup write the system units imperatively.
-  bt-kb-emulator = pkgs.callPackage ./package.nix { };
+  bluetooth-keyboard-emulator = pkgs.callPackage ./package.nix { };
 in
 {
   hardware.bluetooth.enable = true;
@@ -57,7 +56,7 @@ in
   hardware.bluetooth.settings.General.Class = "0x000540";
 
   environment.systemPackages = [
-    bt-kb-emulator
+    bluetooth-keyboard-emulator
     pkgs.bluez
   ];
 
@@ -106,7 +105,7 @@ in
       # (ProfileManager1.RegisterProfile) -- modern bluetoothd's sdptool
       # dropped `add --xml` for arbitrary records, so there is no separate
       # ExecStartPre step here.
-      ExecStart = "${bt-kb-emulator}/bin/bt-kb-hid-server";
+      ExecStart = "${bluetooth-keyboard-emulator}/bin/bt-kb-hid-server";
       Restart = "on-failure";
       RestartSec = 2;
       # Exit 78 (EX_CONFIG) is hid_server.py saying the environment is wrong
